@@ -20,5 +20,11 @@ courseRouter.patch(
   validateSchema(courseUpdateSchema),
   courseController.updateCourse
 );
+courseRouter.post(
+  "/courses/:id/users",
+  validateToken,
+  validateSchema(courseUpdateSchema),
+  courseController.addUserToCourse
+);
 
 export default courseRouter;

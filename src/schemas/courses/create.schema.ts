@@ -8,6 +8,7 @@ const courseSchema = yup.object().shape({
 const courseUpdateSchema = yup.object().shape({
     courseName: yup.string(),
     duration: yup.string(),
+    studendts: yup.array()
 });
 
 const serializedCourseSchema = yup.object().shape({

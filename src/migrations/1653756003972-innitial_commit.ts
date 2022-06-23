@@ -1,4 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import dotenv from "dotenv";
+import bcrypt from "bcrypt"
+
+dotenv.config()
 
 export class innitialCommit1653756003972 implements MigrationInterface {
     name = 'innitialCommit1653756003972'
@@ -11,6 +15,12 @@ export class innitialCommit1653756003972 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_da070fe9a0fe297e5cf5780929" ON "courses_students_users" ("usersId") `);
         await queryRunner.query(`ALTER TABLE "courses_students_users" ADD CONSTRAINT "FK_cfd36369a9b027ccbc64ec2bbf7" FOREIGN KEY ("coursesId") REFERENCES "courses"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
         await queryRunner.query(`ALTER TABLE "courses_students_users" ADD CONSTRAINT "FK_da070fe9a0fe297e5cf57809291" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(
+            `
+                INSERT INTO "users" ("firstName", "lastName", "email", "password", "isAdm", "createdAt", "updatedAt")
+                VALUES ('${process.env.ADMIN_NAME}', '${process.env.ADMIN_LASTNAME}', '${process.env.ADMIN_EMAIL}', '${bcrypt.hashSync(String(process.env.ADMIN_PASSWORD),10)}', true, '2022-05-28T15:36:36.696Z', '2022-05-28T15:36:36.696Z')
+            `
+        )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
