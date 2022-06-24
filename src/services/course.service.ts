@@ -48,7 +48,7 @@ class CourseService {
     await userRepository.save(student)
     await courseRepository.save(course)
 
-    return {status: 201, message:`relation from course ${course.courseName} made for user ${student.firstName}`}
+    return {status: 200, message:`relation from course ${course.courseName} made for user ${student.firstName}`}
   };
 }
 

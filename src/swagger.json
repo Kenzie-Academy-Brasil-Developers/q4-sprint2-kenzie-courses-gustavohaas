@@ -1,0 +1,564 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Kenzie Courses",
+    "description": "Swagger designed to demonstrate application routes.",
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.example.com/support",
+      "email": "support@example.com"
+    },
+    "version": "1.0.1"
+  },
+
+  "servers": [
+    {
+      "url": "http://localhost:3000/api-documentation",
+      "description": "API"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "description": "Essa rota é responsavel por cadastrar um usuário",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateUser" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                  "firstName": "Paulo",
+                  "lastName": "Claudio",
+                  "email": "pauloclaudio@mail.com",
+                  "password": "1234"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "id": "29788820-4fa9-4d61-bb5c-5b8b5ac9f606",
+                  "firstName": "Paulo",
+                  "lastName": "Claudio",
+                  "email": "pauloclaudio@mail.com",
+                  "isAdm": false,
+                  "createdAt": "2022-05-28T15:36:36.696Z",
+                  "updatedAt": "2022-05-28T15:36:36.696Z",
+                  "courses": []
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Essa rota é responsavel por buscar todos usuários",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Null" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": [
+                  {
+                    "id": "e45ab10d-2ff5-44fc-a334-d7dfd39892bb",
+                    "firstName": "Pedro",
+                    "lastName": "Paulo",
+                    "email": "pedropaulo@mail.com",
+                    "isAdm": false,
+                    "createdAt": "2022-05-28T17:46:57.980Z",
+                    "updatedAt": "2022-05-28T17:46:57.981Z"
+                  },
+                  {
+                    "id": "af6d45ff-55f7-4ebe-87fc-15a9a97293e8",
+                    "firstName": "Claudio",
+                    "lastName": "Paulo",
+                    "email": "claudiopaulo@mail.com",
+                    "isAdm": true,
+                    "createdAt": "2022-05-28T17:46:57.980Z",
+                    "updatedAt": "2022-05-28T17:46:57.980Z"
+                  },
+                  {
+                    "id": "5e629f4d-6f80-4c44-a3de-9f30878631ec",
+                    "firstName": "Paulo",
+                    "lastName": "Claudio",
+                    "email": "pauloclaudio@mail.com",
+                    "isAdm": true,
+                    "createdAt": "2022-05-28T17:46:57.980Z",
+                    "updatedAt": "2022-05-28T17:46:57.980Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "Invalid signature"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                      "error": "Missing Authorization Token"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/login": {
+      "post": {
+        "description": "Essa rota é responsavel pelo login de um usuário",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Login" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                  "email": "pauloclaudio@mail.com",
+                  "password": "1234"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU0NWFiMTBkLTJmZjUtNDRmYy1hMzM0LWQ3ZGZkMzk4OTJiYiIsImlhdCI6MTY1Mzc2MDMzNywiZXhwIjoxNjUzNzYzOTM3fQ.ECH1rK8WvGkzY2ghEP5TJW4ZD8cOjeGfyvgSwn9ZAfs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/:id": {
+      "patch": {
+        "description": "Essa rota é responsavel pela atualização de um usuário",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateUser" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                  "firstName": "Paulo",
+                  "lastName": "Claudio",
+                  "email": "pauloclaudio@mail.com",
+                  "password": "1234"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "id": "29788820-4fa9-4d61-bb5c-5b8b5ac9f606",
+                  "firstName": "Paulo",
+                  "lastName": "Claudio",
+                  "email": "pauloclaudio@mail.com",
+                  "isAdm": false,
+                  "createdAt": "2022-05-28T15:36:36.696Z",
+                  "updatedAt": "2022-05-28T15:36:36.696Z",
+                  "courses": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "Invalid signature"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                      "error": "Missing Authorization Token"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Essa rota é responsavel pela procura de um usuário",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Null" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                  "firstName": "Paulo",
+                  "lastName": "Claudio",
+                  "email": "pauloclaudio@mail.com",
+                  "password": "1234"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "id": "29788820-4fa9-4d61-bb5c-5b8b5ac9f606",
+                  "firstName": "Paulo",
+                  "lastName": "Claudio",
+                  "email": "pauloclaudio@mail.com",
+                  "isAdm": false,
+                  "createdAt": "2022-05-28T15:36:36.696Z",
+                  "updatedAt": "2022-05-28T15:36:36.696Z",
+                  "courses": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "Invalid signature"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                      "error": "Missing Authorization Token"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/courses": {
+      "post": {
+        "description": "Essa rota é responsavel por cadastrar um curso",
+        "tags": ["Course"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateCourse" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                  "courseName": "HTML5",
+                  "duration": "3 meses"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "id": "f5b22474-a500-4a54-a04f-c25edf8e852c",
+                  "courseName": "HTML5",
+                  "duration": "3 meses"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Essa rota é responsavel por buscar todos cursos",
+        "tags": ["Course"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Null" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": [
+                  {
+                    "id": "f5b22474-a500-4a54-a04f-c25edf8e852c",
+                    "courseName": "HTML5",
+                    "duration": "3 meses"
+                  },
+                  {
+                    "id": "b36d5f01-a191-4796-b1c0-4713cc5e52be",
+                    "courseName": "CSS3",
+                    "duration": "3 meses"
+                  },
+                  {
+                    "id": "4b56e541-90b3-4590-aa0d-83084ab135dd",
+                    "courseName": "JavaScript",
+                    "duration": "4 meses"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "Invalid signature"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                      "error": "Missing Authorization Token"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/courses/:id": {
+      "patch": {
+        "description": "Essa rota é responsavel por atualizar um curso",
+        "tags": ["Course"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateCourse" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                  "courseName": "HTML5",
+                  "duration": "3 meses"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/courses/:id/users": {
+      "patch": {
+        "description": "Essa rota é responsavel por cadastrar um usuário em um curso",
+        "tags": ["Course"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AddUser" }
+            },
+            "examples": {
+              "user": {
+                "values": {
+                  "email": "teste@mail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "type": "object",
+                "example": "relation from course {Course Name} made for user {User Name}"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  
+  "components": {
+    "schemas": {
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Null": {
+        "type": "object",
+        "properties": {
+        }
+      },
+      "CreateCourse": {
+        "type": "object",
+        "properties": {
+          "courseName": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string"
+          }
+        }
+      },
+      "AddUser": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+} 

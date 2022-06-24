@@ -1,45 +1,37 @@
 import supertest from "supertest";
-import { Connection } from "..";
+import { DataSource } from "typeorm";
+import AppDataSource from "../../data-source";
 import app from "../../app";
-import { User } from "../../entities";
 
 describe("Create user route", () => {
-  const dbConnection = new Connection();
+  let connection: DataSource;
 
   beforeAll(async () => {
-    await dbConnection.create();
-  });
-
-  afterAll(async () => {
-    await dbConnection.clear();
-    await dbConnection.close();
-  });
-
-  afterEach(async () => {
-    await dbConnection.clear();
+    await AppDataSource.initialize()
+      .then((res) => (connection = res))
+      .catch((err) => {
+        console.error("Error during Data Source initialization", err);
+      });
   });
 
   it("Return: User as JSON response and Status code: 201", async () => {
-    const date = new Date()
-    
+
     const user = {
-        email: "teste@mail.com",
-        firstName: "Teste",
-        lastName: "Teste2",
-        password: "123456",
-        isAdm: false,
-        createdAt: date,
-        updatedAt: date
+      email: "teste@mail.com",
+      firstName: "Teste",
+      lastName: "Teste2",
+      password: "123456"
     };
 
-    const response = await supertest(app)
-      .post("/users")
-      .send(user);
-
-    console.log(response)
+    const response = await supertest(app).post("/users").send(user);
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("email");
     expect(response.body.email).toStrictEqual(user.email);
+  });
+
+  afterAll(async () => {
+    await connection.dropDatabase()
+    await connection.destroy();
   });
 });
